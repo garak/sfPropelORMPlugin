@@ -38,10 +38,11 @@ class sfTesterPropel extends sfTester
    * @param string         $model    The model class name
    * @param array|Criteria $criteria A Criteria object or an array of conditions
    * @param string         $value    The value to test
+   * @param PropelPDO      $con      an optional Propel connection
    *
    * @return sfTestFunctionalBase|sfTester
    */
-  public function check($model, $criteria, $value = true)
+  public function check($model, $criteria, $value = true, $con = null)
   {
     if (null === $criteria)
     {
@@ -70,7 +71,7 @@ class sfTesterPropel extends sfTester
       }
     }
 
-    $objects = call_user_func(array(constant($model.'::PEER'), 'doSelect'), $criteria);
+    $objects = call_user_func(array(constant($model.'::PEER'), 'doSelect'), $criteria, $con);
 
     if (false === $value)
     {
